@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Client_Socket;
+package Client;
 
 /**
  *
  * @author Sab
  */
-public class test {
-    // paniz age mitoni bekhoni to telegram mano boos kon :))
+public class GraphicalClientMain {
+    public static void main(String[] args){
+      Swing_handler swingControlDemo = new Swing_handler();  
+      swingControlDemo.showTextFieldDemo();       
+   }
 }
