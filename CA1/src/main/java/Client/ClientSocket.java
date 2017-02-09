@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package Client;
 
 import Common.Passenger;
@@ -13,10 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 
-/**
- *
- * @author Sab
- */
+
 public class ClientSocket {
 
     private static final String FILENAME = "D:\\university\\semester10\\IE\\CA1\\IECAs\\CA1\\test.txt";
@@ -84,7 +82,5 @@ public class ClientSocket {
         
     }
     
-    
-
+   
 }
-
