@@ -17,13 +17,13 @@ public class ServerStuff {
             PrintWriter out = new PrintWriter(new BufferedWriter(
                     new OutputStreamWriter(socket.getOutputStream())), true);
                 String[] parts = command.split("\n");
-                for (int i=0; i<parts.length; i++){
+                for (int i=0; i<parts.length; i++) {
                     out.println(parts[i]);
                 }
                 String response = "";
                 String line;
                 response = response + in.readLine() + "\n";
-                while (in.ready() != false) {
+                while (in.ready()) {
                     response = response + in.readLine() + "\n";
                 }
                 return removeLastChar(response);
