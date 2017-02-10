@@ -16,145 +16,107 @@ import javax.swing.event.ListSelectionListener;
  * @author Sab
  */
 public class Swing_handler {
+
     private JFrame mainFrame;
-   private JLabel headerLabel;
-   private JLabel statusLabel;
-   private JPanel controlPanel;
+    private JPanel controlPanel;
+    private JTextField originText;
+    private JTextField destinationText;
+    private JTextField dateText;
+    private JComboBox<String> adultNo;
+    private JComboBox<String> childNo;
+    private JComboBox<String> infantNo;
+    private JScrollPane scrollPane;
+    private JTable table;
+    private String[] columnNames = {"Orig.", "Dest.", "Date", "Arpln Code", "Flght No.", "Arpln Model", "Class", "Prize"};
+    private Object[][] data = {{" ", " ", " ", " ", " ", " ", " ", " "}};
 
-   public Swing_handler(){
-      prepareGUI();
-   }
+    public Swing_handler() {
+        prepareGUI();
+    }
 
-   private void prepareGUI(){
-      mainFrame = new JFrame("سیستم جستجو بلیت هواپیما");
-      mainFrame.setSize(600,600);
-      mainFrame.setLayout(new GridLayout(2, 1));
+    private void prepareGUI() {
+        mainFrame = new JFrame("سیستم جستجو بلیت هواپیما");
+        mainFrame.setSize(600, 600);
+        mainFrame.setLayout(new GridLayout(2, 1));
+        mainFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent windowEvent) {
+                System.exit(0);
+            }
+        });
+        controlPanel = new JPanel();
+        controlPanel.setLayout(new FlowLayout());
 
-//      headerLabel = new JLabel("",JLabel.RIGHT);
-//      statusLabel = new JLabel("",JLabel.CENTER);
-//      statusLabel.setSize(350,100);
-
-      mainFrame.addWindowListener(new WindowAdapter() {
-         public void windowClosing(WindowEvent windowEvent){
-            System.exit(0);
-         }
-      });
-      controlPanel = new JPanel();
-      controlPanel.setLayout(new FlowLayout());
-
-      //mainFrame.add(headerLabel);
-      mainFrame.add(controlPanel);
-      //mainFrame.add(statusLabel);
-//      GraphicsEnvironment ge
-//                = GraphicsEnvironment.getLocalGraphicsEnvironment();
-//
-//        String[] fonts = ge.getAvailableFontFamilyNames();
-//
-//        final JList list = new JList(fonts);
-//
-//        JScrollPane spane = new JScrollPane();
-//        spane.getViewport().add(list);
-//      mainFrame.add(spane);
-      String[] columnNames = {"Orig.",
-                        "Dest.",
-                        "Date",
-                        "Arpln Code",
-                        "Flght No.",
-                        "Arpln Model",
-                        "Class",
-                        "Prize"};
-      Object[][] data = {
-    {"THR", "MHD",
-        "05Feb", "IR", "652","321","Y","265000"}};
-
-      JTable table = new JTable(data, columnNames);
-      table.setPreferredScrollableViewportSize(new Dimension(500, 70));
+        table = new JTable(data, columnNames);
+        table.setPreferredScrollableViewportSize(new Dimension(500, 70));
         table.setFillsViewportHeight(true);
-      JScrollPane scrollPane = new JScrollPane(table);
-      mainFrame.add(scrollPane);
-      mainFrame.setVisible(true);
-   }
-   public void showTextFieldDemo(){
-      //headerLabel.setText("لطفا اطلاعات را وارد کنید و کلید جستجو را بزنید");
-      JPanel panel = new JPanel();
-      panel.setSize(300,300);
-      //panel.setBackground(Color.GRAY);
-      GridLayout layout = new GridLayout(7,2,10,10);
-      layout.setVgap(10);
-      panel.setLayout(layout);
-      JLabel  originLabel= new JLabel("مبدا: ", JLabel.CENTER);
-      JLabel  destinationLabel = new JLabel("مقصد: ", JLabel.CENTER);
-      JLabel  dateLabel = new JLabel ("تاریخ: ", JLabel.CENTER);
-      JLabel  adultLabel = new JLabel ("بزرگسالان: ", JLabel.CENTER);
-      JLabel  childLabel = new JLabel ("کودکان: ", JLabel.CENTER);
-      JLabel  infantLabel = new JLabel ("خردسالان: ", JLabel.CENTER);
+        scrollPane = new JScrollPane(table);
 
-      Integer[] NumberofPassengers = new Integer[]{0,1,2,3,4,5,6,7,8,9,10};
+        mainFrame.add(controlPanel);
+        mainFrame.add(scrollPane);
+        mainFrame.setVisible(true);
+    }
 
-      final JTextField originText = new JTextField(10);
-      final JTextField destinationText = new JTextField(10);
-      final JTextField dateText = new JTextField(10);
+    public void searchFlight() {
+        JPanel panel = new JPanel();
+        panel.setSize(300, 300);
+        
+        GridLayout layout = new GridLayout(7, 2, 10, 10);
+        layout.setVgap(10);
+        panel.setLayout(layout);
+        
+        JLabel originLabel = new JLabel("مبدا: ", JLabel.CENTER);
+        JLabel destinationLabel = new JLabel("مقصد: ", JLabel.CENTER);
+        JLabel dateLabel = new JLabel("تاریخ: ", JLabel.CENTER);
+        JLabel adultLabel = new JLabel("بزرگسالان: ", JLabel.CENTER);
+        JLabel childLabel = new JLabel("کودکان: ", JLabel.CENTER);
+        JLabel infantLabel = new JLabel("خردسالان: ", JLabel.CENTER);
 
-      final JComboBox<Integer> adultNo = new JComboBox<>(NumberofPassengers);
-      final JComboBox<Integer> childNo = new JComboBox<>(NumberofPassengers);
-      final JComboBox<Integer> infantNo = new JComboBox<>(NumberofPassengers);
+        String[] NumberofPassengers = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10","11","12","13"};
 
-      JButton searchButton = new JButton("جستجو");
-//      searchButton.addActionListener(new ActionListener() {
-//         public void actionPerformed(ActionEvent e) {
-//            String data = "Username " + originText.getText();
-//            data += ", Password: " + new String(destinationText.getText());
-//            statusLabel.setText(data);
-//         }
-//      });
-      panel.add(originText);
-      panel.add(originLabel);
-      panel.add(destinationText);
-      panel.add(destinationLabel);
-      panel.add(dateText);
-      panel.add(dateLabel);
-      panel.add(adultNo);
-      panel.add(adultLabel);
-      panel.add(childNo);
-      panel.add(childLabel);
-      panel.add(infantNo);
-      panel.add(infantLabel);
-      panel.add(searchButton);
-      controlPanel.add(panel);
-      mainFrame.setVisible(true);
-   }
-   private void showEventDemo(){
-      headerLabel.setText("Control in action: Button");
+        originText = new JTextField(10);
+        destinationText = new JTextField(10);
+        dateText = new JTextField(10);
 
-      JButton okButton = new JButton("OK");
-      JButton submitButton = new JButton("Submit");
-      JButton cancelButton = new JButton("Cancel");
+        adultNo = new JComboBox<>(NumberofPassengers);
+        childNo = new JComboBox<>(NumberofPassengers);
+        infantNo = new JComboBox<>(NumberofPassengers);
 
-      okButton.setActionCommand("OK");
-      submitButton.setActionCommand("Submit");
-      cancelButton.setActionCommand("Cancel");
+        JButton searchButton = new JButton("جستجو");
+        searchButton.addActionListener(new ButtonClickListener());
+        
+        panel.add(originText);
+        panel.add(originLabel);
+        panel.add(destinationText);
+        panel.add(destinationLabel);
+        panel.add(dateText);
+        panel.add(dateLabel);
+        panel.add(adultNo);
+        panel.add(adultLabel);
+        panel.add(childNo);
+        panel.add(childLabel);
+        panel.add(infantNo);
+        panel.add(infantLabel);
+        panel.add(searchButton);
+        
+        controlPanel.add(panel);
+        mainFrame.setVisible(true);
+    }
 
-      okButton.addActionListener(new ButtonClickListener());
-      submitButton.addActionListener(new ButtonClickListener());
-      cancelButton.addActionListener(new ButtonClickListener());
+    private class ButtonClickListener implements ActionListener {
 
-      controlPanel.add(okButton);
-      controlPanel.add(submitButton);
-      controlPanel.add(cancelButton);
-
-      mainFrame.setVisible(true);
-   }
-   private class ButtonClickListener implements ActionListener{
-      public void actionPerformed(ActionEvent e) {
-         String command = e.getActionCommand();
-
-         if( command.equals( "OK" ))  {
-            statusLabel.setText("Ok Button clicked.");
-         } else if( command.equals( "Submit" ) )  {
-            statusLabel.setText("Submit Button clicked.");
-         } else {
-            statusLabel.setText("Cancel Button clicked.");
-         }
-      }
-   }
+        public void actionPerformed(ActionEvent e) {
+            
+            String origin = originText.getText();
+            String destination = destinationText.getText();
+            String date = dateText.getText();
+            String adult = (String) adultNo.getSelectedItem();
+            String child = (String) childNo.getSelectedItem();
+            String infant = (String) infantNo.getSelectedItem();
+            
+            String searchInfo = origin+" "+destination+" "+date+" "+adult+" "+child+" "+infant;
+            //sendSearchCommand(searchInfo);
+            //showSearchResult();
+            System.out.println(searchInfo);
+        }
+    }
 }

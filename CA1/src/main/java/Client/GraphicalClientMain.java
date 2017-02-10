@@ -11,7 +11,7 @@ package Client;
  */
 public class GraphicalClientMain {
     public static void main(String[] args){
-      Swing_handler swingControlDemo = new Swing_handler();
-      swingControlDemo.showTextFieldDemo();
+      Swing_handler swingControler = new Swing_handler();  
+      swingControler.searchFlight();       
    }
 }
