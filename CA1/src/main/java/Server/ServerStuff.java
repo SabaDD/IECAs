@@ -1,16 +1,28 @@
 package Server;
 
+import org.apache.log4j.Logger;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+
 
 /**
  * Created by Paniz on 2/10/2017.
  */
 public class ServerStuff {
+    private static final Logger LOGGER =
+            Logger.getLogger(ServerStuff.class.toString());
+//            LOGGER.debug("Low priority.");
+//            LOGGER.info("Next level up.");
+//            LOGGER.warn("High priority.");
+//            LOGGER.error("Higher'priority.");
+
+
     public static String request(String command, String IP, int port) throws IOException {
         InetAddress addr = InetAddress.getByName(IP);
         Socket socket = new Socket(addr, port);
+        LOGGER.info("Socket to server is connected.");
         try {
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(socket.getInputStream()));
@@ -28,7 +40,7 @@ public class ServerStuff {
                 }
                 return removeLastChar(response);
         } finally {
-            //System.out.println("closing...");
+            LOGGER.info("Socket to server is closing. Returning the response");
             socket.close();
         }
     }
@@ -48,7 +60,7 @@ public class ServerStuff {
             //"FIN 76d2b2fa-24bb-3ff8-9580-c9867ced3ce9"
             System.out.print(request("FIN 6a4d00ca-57b4-e21e-e4f6-afced1f92e0a", "188.166.78.119", 8081));
         } catch (IOException e) {
-            System.out.println(e);
+            LOGGER.error("Problem in reading/writing from/to sockets: "+e,e);
         }
     }
 
