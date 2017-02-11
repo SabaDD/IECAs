@@ -76,7 +76,7 @@ public class ServerStuff {
         System.out.println(tokens[0]);
         String response = "";
         if (tokens[0].equals("search"))
-            response = searchRequest(info);
+            response = flightInfosToString(searchRequest(info));
         else if (tokens[0].equals("reserve"))
             response = reserveRequest(info);
 //                int CounterForPassanger= Integer.parseInt(token[7])+Integer.parseInt(token[8])+Integer.parseInt(token[9]);
@@ -100,7 +100,7 @@ public class ServerStuff {
         return response;
     }
 
-    public static String searchRequest(String info) {
+    public static ArrayList<FlightInfo> searchRequest(String info) {
         String result = null;
         String[] tokens = Tokenizer(info, " ");
         ArrayList<FlightInfo> flightInfos = new ArrayList<>();
@@ -178,12 +178,13 @@ public class ServerStuff {
         //System.out.print(result);
         //String finalResult = null;
         //finalResult = flightInfosToString(flightInfos);
-        return flightInfosToString(flightInfos);
+        return flightInfos;
     }
 
     public static String flightInfosToString(ArrayList<FlightInfo> fs) {
         String finalResult = "";
-        for (FlightInfo f : fs) {
+        for (int i = 0 ; i<fs.size(); i++){
+            FlightInfo f = fs.get(i);
             String dTime = f.getDepartureTime().substring(0, 2) + ":" + f.getDepartureTime().substring(2, 4);
             String aTime = f.getArrivalTime().substring(0, 2) + ":" + f.getArrivalTime().substring(2, 4);
             finalResult = finalResult + "Flight: " + f.getAirlineCode() + " " + f.getFlightNo() +
@@ -194,10 +195,15 @@ public class ServerStuff {
                 finalResult = finalResult + "Class: " + entry.getKey();
                 if (f.getClassPrice().get(entry.getKey()) != -1)
                     finalResult = finalResult + " Price: " + f.getClassPrice().get(entry.getKey());
-                finalResult = finalResult + "\n";
+                
+                    finalResult = finalResult + "\n";
+                
             }
+            if(i != fs.size()-1)
+                finalResult = finalResult+"***\n";
+            
         }
-        if (finalResult.charAt(finalResult.length()) == '\n')
+        if (finalResult.length()>0 && finalResult.charAt(finalResult.length()-1) == '\n')
             finalResult = finalResult.substring(0, finalResult.length() - 1);
         return finalResult;
     }
