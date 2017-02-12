@@ -109,7 +109,7 @@ public class ServerStuff {
             response = searchRequest(info);
         else if (tokens[0].equals("reserve"))
             response = reserveRequest(info);
-//                int CounterForPassanger= Integer.parseInt(token[7])+Integer.parseInt(token[8])+Integer.parseInt(token[9]);
+
 //                Passenger[] listOfPassenger = new Passenger[CounterForPassanger];
 //                String reserveInfo = sCurrentLine.replace(token[0]+" ", "");
 //                for(int i = 0 ; i<CounterForPassanger; i++){
