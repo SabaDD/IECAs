@@ -2,8 +2,6 @@ package Server;
 
 import Client.ClientSocket;
 import Common.FlightInfo;
-import Common.Passenger;
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
 import org.apache.log4j.Logger;
 
 import java.io.*;
@@ -24,6 +22,19 @@ public class ServerStuff {
 //            LOGGER.error("Higher'priority.");
     public static String gIP = "188.166.78.119";
     public static int gPort = 8081;
+    public static HashMap<Socket, String> socketTokens;
+
+    public static HashMap<Socket, String> getSocketTokens() {
+        return socketTokens;
+    }
+
+    public static void setSocketTokens(HashMap<Socket, String> socketTokens) {
+        ServerStuff.socketTokens = socketTokens;
+    }
+
+    public ServerStuff() {
+        socketTokens = new HashMap<Socket, String>();
+    }
 
     public static String getgIP() {
         return gIP;
@@ -33,11 +44,22 @@ public class ServerStuff {
         return gPort;
     }
 
-    public static String request(String command, String IP, int port) throws IOException {
+    public static String requestToHelperServer(String command, String IP, int port) throws IOException {
         InetAddress addr = InetAddress.getByName(IP);
+        String[] spaceParts = Tokenizer(command, " ");
         Socket socket = new Socket(addr, port);
         LOGGER.info("Socket to server is connected.");
         try {
+            if (spaceParts[0].equals("FIN")){
+                if(getSocketTokens().containsValue(spaceParts[1])){
+                    for(Map.Entry<Socket, String> entry: socketTokens.entrySet()) {
+                        if (entry.getValue().equals(spaceParts[1])){
+                            socket = entry.getKey();
+                            break;
+                        }
+                    }
+                }
+            }
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(new BufferedWriter(
@@ -52,15 +74,17 @@ public class ServerStuff {
             while (in.ready()) {
                 response = response + in.readLine() + "\n";
             }
-            String [] spaceParts = Tokenizer(command," ");
-            if(spaceParts[0]=="RES"){
-                ClientSocket cs = new ClientSocket();
+            if (spaceParts[0].equals("RES")) {
+                //ClientSocket cs = new ClientSocket();
+                socketTokens.put(socket, removeLastChar(response));
                 //cs.waitforFinalize();
             }
             return removeLastChar(response);
         } finally {
-            LOGGER.info("Socket to server is closing. Returning the response");
-            socket.close();
+            if (!spaceParts[0].equals("RES")) {
+                LOGGER.info("Socket to server is closing. Returning the response");
+                socket.close();
+            }
         }
     }
 
@@ -99,6 +123,7 @@ public class ServerStuff {
 
         else if (tokens[0].equals("finalize"))
             System.out.print("fin");
+            response = finalizeRequest(info);
         //sendFinalizeCommand(tokens[1]);
 //                ShowFinalizeResult();
 //                response = null;
@@ -112,12 +137,12 @@ public class ServerStuff {
         String finalResult = "";
         ArrayList<FlightInfo> flightInfos = new ArrayList<>();
         try {
-            result = request("AV " + tokens[0] + " " + tokens[1] + " " + tokens[2], gIP, gPort);
-            //result = request("PRICE "+)
+            result = requestToHelperServer("AV " + tokens[0] + " " + tokens[1] + " " + tokens[2], gIP, gPort);
+            //result = requestToHelperServer("PRICE "+)
         } catch (IOException e) {
             LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
         }
-        if(result.length()!=0){
+        if (result.length() != 0) {
             String[] results = Tokenizer(result, "\n");
             if (results.length > 0) {
                 for (int i = 0; i < results.length; i += 2) {
@@ -160,7 +185,7 @@ public class ServerStuff {
                             String priceResults = null;
                             //age null bood --> nemikhad
                             try {
-                                priceResults = request(priceQuery, getgIP(), getgPort());
+                                priceResults = requestToHelperServer(priceQuery, getgIP(), getgPort());
                             } catch (IOException e) {
                                 LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
                             }
@@ -206,8 +231,9 @@ public class ServerStuff {
                     finalResult = finalResult + " Price: " + f.getClassPrice().get(entry.getKey());
                 finalResult = finalResult + "\n";
             }
+            finalResult = finalResult+"***\n";
         }
-        if (finalResult.length()>0 && finalResult.charAt(finalResult.length()-1) == '\n')
+        if (finalResult.length() > 0 && finalResult.charAt(finalResult.length() - 1) == '\n')
             finalResult = finalResult.substring(0, finalResult.length() - 1);
         return finalResult;
     }
@@ -219,14 +245,41 @@ public class ServerStuff {
         String request = "RES " + info;
         String result = "";
         try {
-            result = request(request, gIP, gPort);
-            //result = request("PRICE "+)
+            result = requestToHelperServer(request, gIP, gPort);
+            //result = requestToHelperServer("PRICE "+)
+        } catch (IOException e) {
+            LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
+        }
+        int totalPrice = calculateReservePrice(info, result);
+        String[] resultTokens = Tokenizer(result, " ");
+        String finalResult = resultTokens[0]+" "+totalPrice;
+        return finalResult;
+    }
+    public static int calculateReservePrice(String info, String result){
+        int totalPrice = 0;
+        String[] infoTokens = Tokenizer(info, "\n");
+        String[] firstLine = Tokenizer(infoTokens[0], " ");
+        String[] resultTokens = Tokenizer(result, " ");
+        int adultC = Integer.parseInt(firstLine [6]);
+        int childC = Integer.parseInt(firstLine[7]);
+        int infantC = Integer.parseInt(firstLine[8]);
+        int adultP = Integer.parseInt(resultTokens[1]);
+        int childP = Integer.parseInt(resultTokens[2]);
+        int infantP = Integer.parseInt(resultTokens[3]);
+        totalPrice = (adultC*adultP) + (childC*childP) + (infantC*infantP);
+        return totalPrice;
+    }
+    public static String finalizeRequest(String info){
+        String request = "FIN "+ info;
+        String result = "";
+        try {
+            result = requestToHelperServer(request, gIP, gPort);
+            //result = requestToHelperServer("PRICE "+)
         } catch (IOException e) {
             LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
         }
         return result;
     }
-
 //    public static void main(String[] args) {
 //
 //        //try {
@@ -234,7 +287,7 @@ public class ServerStuff {
 //        //"AV THR MHD 05Feb"
 //        //"PRICE THR MHD IR M"
 //        //"FIN 76d2b2fa-24bb-3ff8-9580-c9867ced3ce9"
-//        //System.out.print(request("FIN 6a4d00ca-57b4-e21e-e4f6-afced1f92e0a", "188.166.78.119", 8081));
+//        //System.out.print(requestToHelperServer("FIN 6a4d00ca-57b4-e21e-e4f6-afced1f92e0a", "188.166.78.119", 8081));
 //
 ////        } catch (IOException e) {
 ////            LOGGER.error("Problem in reading/writing from/to sockets: "+e,e);
