@@ -34,14 +34,17 @@ public class ClientSocket {
         //try (BufferedReader br = new BufferedReader(new FileReader(FILENAME))) {
         String sCurrentLine;
         //while ((sCurrentLine = br.readLine()) != null) {
-        sCurrentLine = "search THR MHD 05Feb 10 2 0";
+        //"reserve THR MHD 05Feb IR 452 M 1 0 0\nAli Ghol 123";
+        //search THR MHD 15Feb 10 2 0
+        sCurrentLine = "reserve THR MHD 05Feb IR 452 M 1 0 0\nAli Ghol 123";
         String[] token = Tokenizer(sCurrentLine, " ");
-        System.out.println(token[0]);
+        //System.out.println(token[0]);
         if (token[0].equalsIgnoreCase("search")) {
             //String searchInfo = sCurrentLine.replace(token[0]+" ","");
             sendSearchCommand(sCurrentLine);
             showSearchResult();
         } else if (token[0].equals("reserve")) {
+            sendReserveCommand(sCurrentLine);
 //                        int CounterForPassanger= Integer.parseInt(token[7])+Integer.parseInt(token[8])+Integer.parseInt(token[9]);
 //                        Passenger[] listOfPassenger = new Passenger[CounterForPassanger];
 //                        String reserveInfo = sCurrentLine.replace(token[0]+" ", "");
@@ -53,7 +56,7 @@ public class ClientSocket {
 //                        sendReserveCommand(reserveInfo,listOfPassenger);
 //                        ShowReserveResult();
         } else if (token[0].equals("finalize")) {
-            sendFinalizeCommand(token[1]);
+            sendFinalizeCommand(sCurrentLine);
             ShowFinalizeResult();
         }
         // }
@@ -74,16 +77,21 @@ public class ClientSocket {
 
     }
 
-    private static void sendReserveCommand(String reserveInfo, Passenger[] listofPassenger) {
-
+    private static void sendReserveCommand(String reserveInfo) {
+        ServerStuff s = new ServerStuff();
+        String result = s.receiveRequest(reserveInfo);
+        System.out.print(result);
     }
+    //public static waitforFinalize
 
     private static void ShowReserveResult() {
 
     }
 
-    private static void sendFinalizeCommand(String token) {
-
+    private static void sendFinalizeCommand(String finalizeInfo) {
+        ServerStuff s = new ServerStuff();
+        String result = s.receiveRequest(finalizeInfo);
+        System.out.print(result);
     }
 
     private static void ShowFinalizeResult() {
