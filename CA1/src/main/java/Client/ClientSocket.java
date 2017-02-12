@@ -29,6 +29,8 @@ public class ClientSocket {
         command = "reserve THR MHD 05Feb IR 452 M 1 0 0\nAli Ghol 123";
         token = searchForCommand(command);
         String[] tokenTokens = Tokenizer(token, " ");
+        command = "search THR MHD 05Feb 10 2 0";
+        searchForCommand(command);
         command = "finalize "+tokenTokens[0];
         searchForCommand(command);
     }
@@ -57,7 +59,7 @@ public class ClientSocket {
     private static void sendSearchCommand(String searchInfo) {
         //ServerStuff s = new ServerStuff();
         String result = s.receiveRequest(searchInfo);
-        System.out.print(result);
+        System.out.println(result);
     }
 
     private static void showSearchResult() {
