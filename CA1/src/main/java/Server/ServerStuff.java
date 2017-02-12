@@ -58,6 +58,8 @@ public class ServerStuff {
                             break;
                         }
                     }
+                } else{
+                    //baiad khali bargardoone
                 }
             }
             BufferedReader in = new BufferedReader(
@@ -76,7 +78,8 @@ public class ServerStuff {
             }
             if (spaceParts[0].equals("RES")) {
                 //ClientSocket cs = new ClientSocket();
-                socketTokens.put(socket, removeLastChar(response));
+                String[] responseTokens = Tokenizer(response, " ");
+                socketTokens.put(socket, responseTokens[0]);
                 //cs.waitforFinalize();
             }
             return removeLastChar(response);
@@ -103,31 +106,14 @@ public class ServerStuff {
     public static String receiveRequest(String clientRequest) {
         String[] tokens = Tokenizer(clientRequest, " ");
         String info = clientRequest.replace(tokens[0] + " ", "");
-        System.out.println(tokens[0]);
         String response = "";
         if (tokens[0].equals("search"))
             response = flightInfosToString(searchRequest(info));
         else if (tokens[0].equals("reserve"))
             response = reserveRequest(info);
-
-//                Passenger[] listOfPassenger = new Passenger[CounterForPassanger];
-//                String reserveInfo = sCurrentLine.replace(token[0]+" ", "");
-//                for(int i = 0 ; i<CounterForPassanger; i++){
-//                    sCurrentLine = br.readLine();
-//                    String[] pp = Tokenizer(sCurrentLine," ");
-//                    listOfPassenger[i] = new Passenger(pp[0],pp[1],pp[2]);
-//                }
-//                sendReserveCommand(reserveInfo,listOfPassenger);
-//                ShowReserveResult();
-
-
-        else if (tokens[0].equals("finalize"))
-            System.out.print("fin");
+        else if (tokens[0].equals("finalize")) {
             response = finalizeRequest(info);
-        //sendFinalizeCommand(tokens[1]);
-//                ShowFinalizeResult();
-//                response = null;
-
+        }
         return response;
     }
 
@@ -138,7 +124,6 @@ public class ServerStuff {
         ArrayList<FlightInfo> flightInfos = new ArrayList<>();
         try {
             result = requestToHelperServer("AV " + tokens[0] + " " + tokens[1] + " " + tokens[2], gIP, gPort);
-            //result = requestToHelperServer("PRICE "+)
         } catch (IOException e) {
             LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
         }
@@ -246,14 +231,10 @@ public class ServerStuff {
     }
 
     public static String reserveRequest(String info) {
-//        RES <Origin Code> <Destination Code> <Airline Code> <Flight No.> <Seat Class> <Adult Count> <Child Count> <Infant Count> 2. [<First Name> <Surname> <National ID>\n]*
-//        reserve <Origin Code> <Destination Code> <Airline Code> <Flight No.> <Seat Class> <Adult Count> <Child Count> <Infant Count> 2. [<First Name> <Surname> <National ID>\n]*
-        //String[] tokens = Tokenizer(info, " ");
         String request = "RES " + info;
         String result = "";
         try {
             result = requestToHelperServer(request, gIP, gPort);
-            //result = requestToHelperServer("PRICE "+)
         } catch (IOException e) {
             LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
         }
