@@ -18,10 +18,6 @@ import jdk.nashorn.internal.codegen.CompilerConstants;
 public class ServerStuff {
     private static final Logger LOGGER =
             Logger.getLogger(ServerStuff.class.toString());
-    //            LOGGER.debug("Low priority.");
-//            LOGGER.info("Next level up.");
-//            LOGGER.warn("High priority.");
-//            LOGGER.error("Higher'priority.");
     public static String gIP = "188.166.78.119";
     public static int gPort = 8081;
     static HashMap<Socket, String> socketTokens;
@@ -40,11 +36,11 @@ public class ServerStuff {
         tokensInfo = new HashMap<String, String>();
     }
 
-    public static String getgIP() {
+    public String getgIP() {
         return gIP;
     }
 
-    public static int getgPort() {
+    public int getgPort() {
         return gPort;
     }
     public void setgIP(String gIP){
@@ -54,7 +50,7 @@ public class ServerStuff {
         this.gPort = gPort;
     }
 
-    public static String requestToHelperServer(String command, String IP, int port) throws IOException {
+    public String requestToHelperServer(String command, String IP, int port) throws IOException {
         InetAddress addr = InetAddress.getByName(IP);
         String response = "";
         String[] spaceParts = Tokenizer(command, " ");
@@ -71,7 +67,6 @@ public class ServerStuff {
                     }
                 } else{
                     return response;
-                    //baiad khali bargardoone
                 }
             }
             BufferedReader in = new BufferedReader(
@@ -82,18 +77,15 @@ public class ServerStuff {
             for (int i = 0; i < nLParts.length; i++) {
                 out.println(nLParts[i]);
             }
-            String response = "";
             String line;
             response = response + in.readLine() + "\n";
             while (in.ready()) {
                 response = response + in.readLine() + "\n";
             }
             if (spaceParts[0].equals("RES")) {
-                //ClientSocket cs = new ClientSocket();
                 String[] responseTokens = Tokenizer(response, " ");
                 socketTokens.put(socket, responseTokens[0]);
                 tokensInfo.put(responseTokens[0],command);
-                //cs.waitforFinalize();
             }
             return removeLastChar(response);
         } finally {
@@ -104,22 +96,21 @@ public class ServerStuff {
         }
     }
 
-    public static String removeLastChar(String str) {
+    public String removeLastChar(String str) {
         if (str != null && str.length() > 0 && str.charAt(str.length() - 1) == '\n') {
             str = str.substring(0, str.length() - 1);
         }
         return str;
     }
 
-    public static String[] Tokenizer(String command, String delim) {
+    public String[] Tokenizer(String command, String delim) {
         String[] token = command.split(delim);
         return token;
     }
 
-    public static String receiveRequest(String clientRequest) {
+    public String receiveRequest(String clientRequest) {
         String[] tokens = Tokenizer(clientRequest, " ");
         String info = clientRequest.replace(tokens[0] + " ", "");
-        System.out.println(tokens[0]);
         String response = "";
         if (tokens[0].equals("search"))
             response = flightInfosToString(searchRequest(info));
@@ -131,14 +122,13 @@ public class ServerStuff {
         return response;
     }
 
-    public static ArrayList<FlightInfo> searchRequest(String info) {
+    public  ArrayList<FlightInfo> searchRequest(String info) {
         String result = null;
         String[] tokens = Tokenizer(info, " ");
         String finalResult = "";
         ArrayList<FlightInfo> flightInfos = new ArrayList<>();
         try {
             result = requestToHelperServer("AV " + tokens[0] + " " + tokens[1] + " " + tokens[2], gIP, gPort);
-            //result = requestToHelperServer("PRICE "+)
         } catch (IOException e) {
             LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
         }
@@ -163,19 +153,15 @@ public class ServerStuff {
                     f.setChildCount(Integer.parseInt(tokens[4]));
                     f.setInfantCount(Integer.parseInt(tokens[5]));
                     Map<Character, Character> m = new HashMap<Character, Character>();
-                    //ArrayList<HashMap<Character, Integer>> ms = new ArrayList<HashMap<Character, Integer>>();
                     for (int j = 0; j < iPresultsTokens.length; j++) {
                         f.getClassSeat().put(iPresultsTokens[j].charAt(0), iPresultsTokens[j].charAt(1));
-                        //m.put(iPresultsTokens[j].charAt(0),iPresultsTokens[j].charAt(1));
                     }
-                    //f.setClassSeat(m);
                     flightInfos.add(f);
                 }
                 for (int i = 0; i < flightInfos.size(); i++) {
                     Iterator it = flightInfos.get(i).getClassSeat().entrySet().iterator();
                     while (it.hasNext()) {
                         Map.Entry entry = (Map.Entry) it.next();
-//                    if ((Character)entry.getValue()!='C'){
                         if ((Character) entry.getValue() == 'A' ||
                                 Character.getNumericValue((Character) entry.getValue()) > (flightInfos.get(i).getAdultCount() +
                                         flightInfos.get(i).getChildCount() + flightInfos.get(i).getInfantCount())) {
@@ -183,7 +169,6 @@ public class ServerStuff {
                                     flightInfos.get(i).getDestinationCode() + " " + flightInfos.get(i).getAirlineCode() + " " +
                                     entry.getKey();
                             String priceResults = null;
-                            //age null bood --> nemikhad
                             try {
                                 priceResults = requestToHelperServer(priceQuery, getgIP(), getgPort());
                             } catch (IOException e) {
@@ -197,27 +182,18 @@ public class ServerStuff {
                             int sum = adult + child + infant;
                             flightInfos.get(i).getClassPrice().put(temp, sum);
                         } else {
-                            // -1 neshoon mide ke teedade darkhasti bishtar az teedad e mojud boode
                             flightInfos.get(i).getClassPrice().put((Character) entry.getKey(), -1);
                         }
                     }
-//                for (Map.Entry<Character, Character> entry : flightInfos.get(i).getClassSeat().entrySet())
-//                {
-//
-//                }
+
                 }
             }
             finalResult = flightInfosToString(flightInfos);
         }
-
-        //System.out.print(result);
-        //String finalResult = null;
-        //finalResult = flightInfosToString(flightInfos);
-
         return flightInfos;
     }
 
-    public static String flightInfosToString(ArrayList<FlightInfo> fs) {
+    public String flightInfosToString(ArrayList<FlightInfo> fs) {
         String finalResult = "";
         for (int i = 0 ; i<fs.size(); i++){
             FlightInfo f = fs.get(i);
@@ -240,18 +216,16 @@ public class ServerStuff {
                 finalResult = finalResult+"***\n";
             
         }
-//        if (finalResult.length()>0 && finalResult.charAt(finalResult.length()-1) == '\n')
-//            finalResult = finalResult.substring(0, finalResult.length() - 1);
+
         return finalResult;
     }
 
-    public static String reserveRequest(String info) {
+    public  String reserveRequest(String info) {
         String request = "RES " + info;
         String result = "";
         String finalResult = "";
         try {
             result = requestToHelperServer(request, gIP, gPort);
-            //result = requestToHelperServer("PRICE "+)
         } catch (IOException e) {
             LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
         }
@@ -262,7 +236,7 @@ public class ServerStuff {
         }
         return finalResult;
     }
-    public static int calculateReservePrice(String info, String result){
+    public int calculateReservePrice(String info, String result){
         int totalPrice = 0;
         String[] infoTokens = Tokenizer(info, "\n");
         String[] firstLine = Tokenizer(infoTokens[0], " ");
@@ -276,22 +250,20 @@ public class ServerStuff {
         totalPrice = (adultC*adultP) + (childC*childP) + (infantC*infantP);
         return totalPrice;
     }
-    public static String finalizeRequest(String info){
+    public String finalizeRequest(String info){
         String request = "FIN "+ info;
         String result = "";
         try {
             result = requestToHelperServer(request, gIP, gPort);
-            //result = requestToHelperServer("PRICE "+)
         } catch (IOException e) {
             LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
         }
-        //in shomareie ticket ha be dard nemikhore??????
         String finalResult = "";
         if(!result.equals(""))
             finalResult = finalizeResponseToTicketInfo(info, result);
         return finalResult;
     }
-    public static String finalizeResponseToTicketInfo(String info, String refrence){
+    public String finalizeResponseToTicketInfo(String info, String refrence){
         String ticketInfo = "";
         String reserveInfo = "";
         String[] referenceTokens = Tokenizer(refrence, "\n");
@@ -327,16 +299,12 @@ public class ServerStuff {
                     ti.setAirplaneModel(f.getAirplaneModel());
                 }
             }
-            //inja search bezan va departure p arrival o peida kon
             tis.add(ti);
         }
         ticketInfo = ticketInfoToString(tis);
-        //reserve <Origin Code> <Destination Code> <Date> <Airline Code> <Flight No.> <Seat Class> <Adult Count> <Child Count> <Infant Count> 2. [<First Name> <Surname> <National ID>\n]*
-        //[<First Name> <Surname> <Reference Code> <Ticket No.> <Origin Code> <Destination Code>
-        // <Airline Code> <Flight No.> <Seat Class> <Departure Time> <Arrival Time> <Airplane Model>\n]*
         return ticketInfo;
     }
-    public static String ticketInfoToString(ArrayList<TicketInfo> ts) {
+    public String ticketInfoToString(ArrayList<TicketInfo> ts) {
         String finalResult = "";
         for (int i = 0 ; i<ts.size(); i++){
             TicketInfo t = ts.get(i);
@@ -348,22 +316,9 @@ public class ServerStuff {
                     " " +t.getSeatClase()+" "+ dTime + " " + aTime + " " + t.getAirplaneModel() + "\n";
 
         }
-//        if (finalResult.length()>0 && finalResult.charAt(finalResult.length()-1) == '\n')
-//            finalResult = finalResult.substring(0, finalResult.length() - 1);
+
         return finalResult;
     }
-//    public static void main(String[] args) {
-//
-//        //try {
-//        //System.out.print("RES THR MHD 05Feb IR 452 M 1 0 0\nAli Ghol 123");
-//        //"AV THR MHD 05Feb"
-//        //"PRICE THR MHD IR M"
-//        //"FIN 76d2b2fa-24bb-3ff8-9580-c9867ced3ce9"
-//        //System.out.print(requestToHelperServer("FIN 6a4d00ca-57b4-e21e-e4f6-afced1f92e0a", "188.166.78.119", 8081));
-//
-////        } catch (IOException e) {
-////            LOGGER.error("Problem in reading/writing from/to sockets: "+e,e);
-////        }
-//    }
+
 
 }

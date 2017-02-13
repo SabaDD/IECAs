@@ -30,7 +30,8 @@ public class ClientSocket {
     private static String helper_server_ip ;
     private static int helper_server_port ;
 
-    public static ServerStuff s;
+    public static ServerStuff s = new ServerStuff();
+    
     public static void main(String[] args) throws IOException {
         int port_number = Integer.parseInt(args[0]);
         helper_server_ip = args[1];
@@ -53,95 +54,57 @@ public class ClientSocket {
             //try (BufferedReader br = new BufferedReader(new FileReader(FILENAME))) {
             String sCurrentLine;
             while((sCurrentLine = in.readLine())!=null){
-                System.out.println("in the ready while");
-                LOGGER.info("in the ready while");
-                //String sCurrentLine = in.readLine();
-                System.out.println(sCurrentLine);
-        //while ((sCurrentLine = br.readLine()) != null) {
-                //"reserve THR MHD 05Feb IR 452 M 1 0 0\nAli Ghol 123";
-                //String sCurrentLine = "search THR MHD 05Feb 10 2 0";
-                //sCurrentLine = "reserve THR MHD 05Feb IR 452 M 1 0 0\nAli Ghol 123";
+                LOGGER.info("Reading Command from Client");
                 String[] token = Tokenizer(sCurrentLine, " ");
-                //System.out.println(token[0]);
                 if (token[0].equalsIgnoreCase("search")) {
-                    //String searchInfo = sCurrentLine.replace(token[0]+" ","");
+                    
                     sendSearchCommand(sCurrentLine,out);
-                    showSearchResult();
+                    
                 } else if (token[0].equals("reserve")) {
 
                         int CounterForPassanger= Integer.parseInt(token[7])+Integer.parseInt(token[8])+Integer.parseInt(token[9]);
-//                        Passenger[] listOfPassenger = new Passenger[CounterForPassanger];
-//                        String reserveInfo = sCurrentLine.replace(token[0]+" ", "");
                         for(int i = 0 ; i<CounterForPassanger; i++){
                             sCurrentLine = sCurrentLine+"\n"+ in.readLine();
-//                            String[] pp = Tokenizer(sCurrentLine," ");
-//                            listOfPassenger[i] = new Passenger(pp[0],pp[1],pp[2]);
                         }
-//                        sendReserveCommand(reserveInfo,listOfPassenger);
-//                        ShowReserveResult();
                         System.out.println(sCurrentLine);
+                        
                     sendReserveCommand(sCurrentLine,out);
+                    
                 } else if (token[0].equals("finalize")) {
+                    
                     sendFinalizeCommand(sCurrentLine,out);
-                    ShowFinalizeResult();
+                    
                 }
             }
-            // }
-
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
-
-   // private static void sendSearchCommand(String searchInfo) {
-        //ServerStuff s = new ServerStuff();
     private static void sendSearchCommand(String searchInfo, PrintWriter out) {
-        //ServerStuff s = new ServerStuff();
         s.setgIP(helper_server_ip);
         s.setgPort(helper_server_port);
         String result = s.receiveRequest(searchInfo);
-        System.out.print(result);
+        //System.out.print(result);
         out.print(result);
 
     }
 
-    private static void showSearchResult() {
-
-    }
-
-   // private static String sendReserveCommand(String reserveInfo) {
-        //ServerStuff s = new ServerStuff();
     private static void sendReserveCommand(String reserveInfo,PrintWriter out) {
-        //ServerStuff s = new ServerStuff();
         s.setgIP(helper_server_ip);
         s.setgPort(helper_server_port);
         String result = s.receiveRequest(reserveInfo);
-        System.out.print(result);
-        //return result;
+        //System.out.print(result);
         out.print(result);
     }
-    //public static waitforFinalize
 
-    private static void ShowReserveResult() {
-
-    }
-
-//    private static void sendFinalizeCommand(String finalizeInfo) {
-//        //ServerStuff s = new ServerStuff();
     private static void sendFinalizeCommand(String finalizeInfo, PrintWriter out) {
         s.setgIP(helper_server_ip);
         s.setgPort(helper_server_port);
         String result = s.receiveRequest(finalizeInfo);
-        System.out.print(result);
+        //System.out.print(result);
         out.print(result);
-    }
-
-    private static void ShowFinalizeResult() {
-
     }
 
 
