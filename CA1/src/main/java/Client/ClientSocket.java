@@ -50,7 +50,8 @@ public class ClientSocket {
 
     private static void searchForCommand(Socket client) throws IOException {
         try (BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()))) {
-            PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+            //PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(client.getOutputStream()), true);
             //try (BufferedReader br = new BufferedReader(new FileReader(FILENAME))) {
             String sCurrentLine;
             while((sCurrentLine = in.readLine())!=null){
@@ -88,6 +89,7 @@ public class ClientSocket {
         String result = s.receiveRequest(searchInfo);
         //System.out.print(result);
         out.print(result);
+        out.flush();
 
     }
 
@@ -97,6 +99,7 @@ public class ClientSocket {
         String result = s.receiveRequest(reserveInfo);
         //System.out.print(result);
         out.print(result);
+        out.flush();
     }
 
     private static void sendFinalizeCommand(String finalizeInfo, PrintWriter out) {
@@ -105,6 +108,7 @@ public class ClientSocket {
         String result = s.receiveRequest(finalizeInfo);
         //System.out.print(result);
         out.print(result);
+        out.flush();
     }
 
 
