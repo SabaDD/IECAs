@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.*;
+import jdk.nashorn.internal.codegen.CompilerConstants;
 
 
 /**
@@ -42,6 +43,12 @@ public class ServerStuff {
 
     public static int getgPort() {
         return gPort;
+    }
+    public void setgIP(String gIP){
+        this.gIP = gIP;
+    }
+    public void setgPort(int gPort){
+        this.gPort = gPort;
     }
 
     public static String requestToHelperServer(String command, String IP, int port) throws IOException {
@@ -105,10 +112,13 @@ public class ServerStuff {
         String info = clientRequest.replace(tokens[0] + " ", "");
         System.out.println(tokens[0]);
         String response = "";
-        if (tokens[0].equals("search"))
+        if (tokens[0].equals("search")){
+            //System.out.println("intoam hastma");
             response = flightInfosToString(searchRequest(info));
-        else if (tokens[0].equals("reserve"))
+        }
+        else if (tokens[0].equals("reserve")){
             response = reserveRequest(info);
+        }
 
 //                Passenger[] listOfPassenger = new Passenger[CounterForPassanger];
 //                String reserveInfo = sCurrentLine.replace(token[0]+" ", "");
@@ -121,9 +131,10 @@ public class ServerStuff {
 //                ShowReserveResult();
 
 
-        else if (tokens[0].equals("finalize"))
+        else if (tokens[0].equals("finalize")){
             System.out.print("fin");
             response = finalizeRequest(info);
+        }
         //sendFinalizeCommand(tokens[1]);
 //                ShowFinalizeResult();
 //                response = null;
