@@ -18,10 +18,6 @@ import jdk.nashorn.internal.codegen.CompilerConstants;
 public class ServerStuff {
     private static final Logger LOGGER =
             Logger.getLogger(ServerStuff.class.toString());
-    //            LOGGER.debug("Low priority.");
-//            LOGGER.info("Next level up.");
-//            LOGGER.warn("High priority.");
-//            LOGGER.error("Higher'priority.");
     public static String gIP = "188.166.78.119";
     public static int gPort = 8081;
     static HashMap<Socket, String> socketTokens;
@@ -82,7 +78,7 @@ public class ServerStuff {
             for (int i = 0; i < nLParts.length; i++) {
                 out.println(nLParts[i]);
             }
-            String response = "";
+            //String response = "";
             String line;
             response = response + in.readLine() + "\n";
             while (in.ready()) {
@@ -201,19 +197,10 @@ public class ServerStuff {
                             flightInfos.get(i).getClassPrice().put((Character) entry.getKey(), -1);
                         }
                     }
-//                for (Map.Entry<Character, Character> entry : flightInfos.get(i).getClassSeat().entrySet())
-//                {
-//
-//                }
                 }
             }
             finalResult = flightInfosToString(flightInfos);
         }
-
-        //System.out.print(result);
-        //String finalResult = null;
-        //finalResult = flightInfosToString(flightInfos);
-
         return flightInfos;
     }
 
@@ -240,8 +227,6 @@ public class ServerStuff {
                 finalResult = finalResult+"***\n";
             
         }
-//        if (finalResult.length()>0 && finalResult.charAt(finalResult.length()-1) == '\n')
-//            finalResult = finalResult.substring(0, finalResult.length() - 1);
         return finalResult;
     }
 
@@ -251,7 +236,6 @@ public class ServerStuff {
         String finalResult = "";
         try {
             result = requestToHelperServer(request, gIP, gPort);
-            //result = requestToHelperServer("PRICE "+)
         } catch (IOException e) {
             LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
         }
@@ -285,7 +269,6 @@ public class ServerStuff {
         } catch (IOException e) {
             LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
         }
-        //in shomareie ticket ha be dard nemikhore??????
         String finalResult = "";
         if(!result.equals(""))
             finalResult = finalizeResponseToTicketInfo(info, result);
@@ -327,13 +310,9 @@ public class ServerStuff {
                     ti.setAirplaneModel(f.getAirplaneModel());
                 }
             }
-            //inja search bezan va departure p arrival o peida kon
             tis.add(ti);
         }
         ticketInfo = ticketInfoToString(tis);
-        //reserve <Origin Code> <Destination Code> <Date> <Airline Code> <Flight No.> <Seat Class> <Adult Count> <Child Count> <Infant Count> 2. [<First Name> <Surname> <National ID>\n]*
-        //[<First Name> <Surname> <Reference Code> <Ticket No.> <Origin Code> <Destination Code>
-        // <Airline Code> <Flight No.> <Seat Class> <Departure Time> <Arrival Time> <Airplane Model>\n]*
         return ticketInfo;
     }
     public static String ticketInfoToString(ArrayList<TicketInfo> ts) {
@@ -348,22 +327,7 @@ public class ServerStuff {
                     " " +t.getSeatClase()+" "+ dTime + " " + aTime + " " + t.getAirplaneModel() + "\n";
 
         }
-//        if (finalResult.length()>0 && finalResult.charAt(finalResult.length()-1) == '\n')
-//            finalResult = finalResult.substring(0, finalResult.length() - 1);
         return finalResult;
     }
-//    public static void main(String[] args) {
-//
-//        //try {
-//        //System.out.print("RES THR MHD 05Feb IR 452 M 1 0 0\nAli Ghol 123");
-//        //"AV THR MHD 05Feb"
-//        //"PRICE THR MHD IR M"
-//        //"FIN 76d2b2fa-24bb-3ff8-9580-c9867ced3ce9"
-//        //System.out.print(requestToHelperServer("FIN 6a4d00ca-57b4-e21e-e4f6-afced1f92e0a", "188.166.78.119", 8081));
-//
-////        } catch (IOException e) {
-////            LOGGER.error("Problem in reading/writing from/to sockets: "+e,e);
-////        }
-//    }
 
 }

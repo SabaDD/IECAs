@@ -30,7 +30,7 @@ public class ClientSocket {
     private static String helper_server_ip ;
     private static int helper_server_port ;
 
-    public static ServerStuff s;
+    public static ServerStuff s = new ServerStuff();
     public static void main(String[] args) throws IOException {
         int port_number = Integer.parseInt(args[0]);
         helper_server_ip = args[1];
