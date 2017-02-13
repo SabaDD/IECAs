@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package Client;
 
 import Common.Passenger;
@@ -21,13 +22,15 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+
 public class ClientSocket {
 
     private static final String FILENAME = "E:\\IT\\Semester 10\\IE\\Projects\\CA1.1\\IECAs\\CA1\\test.txt";
     private static final Logger LOGGER = Logger.getLogger(ClientSocket.class.toString());
     private static String helper_server_ip ;
     private static int helper_server_port ;
-    
+
+    public static ServerStuff s;
     public static void main(String[] args) throws IOException {
         int port_number = Integer.parseInt(args[0]);
         helper_server_ip = args[1];
@@ -65,7 +68,7 @@ public class ClientSocket {
                     sendSearchCommand(sCurrentLine,out);
                     showSearchResult();
                 } else if (token[0].equals("reserve")) {
-                    
+
                         int CounterForPassanger= Integer.parseInt(token[7])+Integer.parseInt(token[8])+Integer.parseInt(token[9]);
 //                        Passenger[] listOfPassenger = new Passenger[CounterForPassanger];
 //                        String reserveInfo = sCurrentLine.replace(token[0]+" ", "");
@@ -94,26 +97,31 @@ public class ClientSocket {
 
     }
 
+   // private static void sendSearchCommand(String searchInfo) {
+        //ServerStuff s = new ServerStuff();
     private static void sendSearchCommand(String searchInfo, PrintWriter out) {
-        ServerStuff s = new ServerStuff();
+        //ServerStuff s = new ServerStuff();
         s.setgIP(helper_server_ip);
         s.setgPort(helper_server_port);
         String result = s.receiveRequest(searchInfo);
         System.out.print(result);
         out.print(result);
-        
+
     }
 
     private static void showSearchResult() {
 
     }
 
+   // private static String sendReserveCommand(String reserveInfo) {
+        //ServerStuff s = new ServerStuff();
     private static void sendReserveCommand(String reserveInfo,PrintWriter out) {
-        ServerStuff s = new ServerStuff();
+        //ServerStuff s = new ServerStuff();
         s.setgIP(helper_server_ip);
         s.setgPort(helper_server_port);
         String result = s.receiveRequest(reserveInfo);
         System.out.print(result);
+        //return result;
         out.print(result);
     }
     //public static waitforFinalize
@@ -122,8 +130,9 @@ public class ClientSocket {
 
     }
 
+//    private static void sendFinalizeCommand(String finalizeInfo) {
+//        //ServerStuff s = new ServerStuff();
     private static void sendFinalizeCommand(String finalizeInfo, PrintWriter out) {
-        ServerStuff s = new ServerStuff();
         s.setgIP(helper_server_ip);
         s.setgPort(helper_server_port);
         String result = s.receiveRequest(finalizeInfo);
