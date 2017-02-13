@@ -16,8 +16,8 @@ import jdk.nashorn.internal.codegen.CompilerConstants;
  * Created by Paniz on 2/10/2017.
  */
 public class ServerStuff {
-    private static final Logger LOGGER =
-            Logger.getLogger(ServerStuff.class.toString());
+    //private static final Logger LOGGER =
+       //     Logger.getLogger(ServerStuff.class.toString());
     public static String gIP = "188.166.78.119";
     public static int gPort = 8081;
     static HashMap<Socket, String> socketTokens;
@@ -55,7 +55,7 @@ public class ServerStuff {
         String response = "";
         String[] spaceParts = Tokenizer(command, " ");
         Socket socket = new Socket(addr, port);
-        LOGGER.info("Socket to server is connected.");
+       // LOGGER.info("Socket to server is connected.");
         try {
             if (spaceParts[0].equals("FIN")){
                 if(getSocketTokens().containsValue(spaceParts[1])){
@@ -90,7 +90,7 @@ public class ServerStuff {
             return removeLastChar(response);
         } finally {
             if (!spaceParts[0].equals("RES")) {
-                LOGGER.info("Socket to server is closing. Returning the response");
+//                LOGGER.info("Socket to server is closing. Returning the response");
                 socket.close();
             }
         }
@@ -130,7 +130,7 @@ public class ServerStuff {
         try {
             result = requestToHelperServer("AV " + tokens[0] + " " + tokens[1] + " " + tokens[2], gIP, gPort);
         } catch (IOException e) {
-            LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
+//            LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
         }
         if (result.length() != 0) {
             String[] results = Tokenizer(result, "\n");
@@ -172,7 +172,7 @@ public class ServerStuff {
                             try {
                                 priceResults = requestToHelperServer(priceQuery, getgIP(), getgPort());
                             } catch (IOException e) {
-                                LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
+//                                LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
                             }
                             String[] priceResultsTokens = Tokenizer(priceResults, " ");
                             int adult = flightInfos.get(i).getAdultCount() * Integer.parseInt(priceResultsTokens[0]);
@@ -227,7 +227,7 @@ public class ServerStuff {
         try {
             result = requestToHelperServer(request, gIP, gPort);
         } catch (IOException e) {
-            LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
+//            LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
         }
         if (!result.equals("")){
             int totalPrice = calculateReservePrice(info, result);
@@ -256,7 +256,7 @@ public class ServerStuff {
         try {
             result = requestToHelperServer(request, gIP, gPort);
         } catch (IOException e) {
-            LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
+//            LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
         }
         String finalResult = "";
         if(!result.equals(""))

@@ -9,7 +9,7 @@ package Client;
 import Common.Passenger;
 import Server.ServerStuff;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -26,7 +26,7 @@ import java.net.Socket;
 public class ClientSocket {
 
     private static final String FILENAME = "E:\\IT\\Semester 10\\IE\\Projects\\CA1.1\\IECAs\\CA1\\test.txt";
-    private static final Logger LOGGER = Logger.getLogger(ClientSocket.class.toString());
+    //private static final Logger LOGGER = Logger.getLogger(ClientSocket.class.toString());
     private static String helper_server_ip ;
     private static int helper_server_port ;
 
@@ -54,7 +54,7 @@ public class ClientSocket {
             //try (BufferedReader br = new BufferedReader(new FileReader(FILENAME))) {
             String sCurrentLine;
             while((sCurrentLine = in.readLine())!=null){
-                LOGGER.info("Reading Command from Client");
+                //LOGGER.info("Reading Command from Client");
                 String[] token = Tokenizer(sCurrentLine, " ");
                 if (token[0].equalsIgnoreCase("search")) {
                     
