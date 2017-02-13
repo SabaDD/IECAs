@@ -1,5 +1,6 @@
 package Server;
 
+import Client.ClientSocket;
 import Common.FlightInfo;
 import Common.TicketInfo;
 import org.apache.log4j.Logger;
@@ -8,6 +9,7 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.*;
+import jdk.nashorn.internal.codegen.CompilerConstants;
 
 
 /**
@@ -45,6 +47,12 @@ public class ServerStuff {
     public static int getgPort() {
         return gPort;
     }
+    public void setgIP(String gIP){
+        this.gIP = gIP;
+    }
+    public void setgPort(int gPort){
+        this.gPort = gPort;
+    }
 
     public static String requestToHelperServer(String command, String IP, int port) throws IOException {
         InetAddress addr = InetAddress.getByName(IP);
@@ -74,6 +82,7 @@ public class ServerStuff {
             for (int i = 0; i < nLParts.length; i++) {
                 out.println(nLParts[i]);
             }
+            String response = "";
             String line;
             response = response + in.readLine() + "\n";
             while (in.ready()) {
@@ -110,6 +119,7 @@ public class ServerStuff {
     public static String receiveRequest(String clientRequest) {
         String[] tokens = Tokenizer(clientRequest, " ");
         String info = clientRequest.replace(tokens[0] + " ", "");
+        System.out.println(tokens[0]);
         String response = "";
         if (tokens[0].equals("search"))
             response = flightInfosToString(searchRequest(info));
@@ -128,6 +138,7 @@ public class ServerStuff {
         ArrayList<FlightInfo> flightInfos = new ArrayList<>();
         try {
             result = requestToHelperServer("AV " + tokens[0] + " " + tokens[1] + " " + tokens[2], gIP, gPort);
+            //result = requestToHelperServer("PRICE "+)
         } catch (IOException e) {
             LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
         }
@@ -240,6 +251,7 @@ public class ServerStuff {
         String finalResult = "";
         try {
             result = requestToHelperServer(request, gIP, gPort);
+            //result = requestToHelperServer("PRICE "+)
         } catch (IOException e) {
             LOGGER.error("Problem in reading/writing from/to sockets: " + e, e);
         }
