@@ -32,7 +32,7 @@ public class Swing_handler {
     private JComboBox<String> infantNo;
     private JScrollPane scrollPane;
     private JTable table;
-    private String[] columnNames = {"Orig.", "Dest.", "Date", "Arpln Code", "Flght No.", "Arpln Model", "Class", "Prize"};
+    private String[] columnNames = {"Orig.", "Dest.", "Date", "Arpln Code", "Flght No.", "Arpln Model", "Class", "Price"};
     private Object[][] initialData = new Object[1][8];
     private Object[][] data = new Object[50][8];
 

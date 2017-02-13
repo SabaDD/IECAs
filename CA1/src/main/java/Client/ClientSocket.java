@@ -59,7 +59,7 @@ public class ClientSocket {
     private static void sendSearchCommand(String searchInfo) {
         //ServerStuff s = new ServerStuff();
         String result = s.receiveRequest(searchInfo);
-        System.out.println(result);
+        System.out.print(result);
     }
 
     private static void showSearchResult() {
@@ -69,7 +69,7 @@ public class ClientSocket {
     private static String sendReserveCommand(String reserveInfo) {
         //ServerStuff s = new ServerStuff();
         String result = s.receiveRequest(reserveInfo);
-        System.out.println(result);
+        System.out.print(result);
         return result;
     }
     //public static waitforFinalize
@@ -81,7 +81,7 @@ public class ClientSocket {
     private static void sendFinalizeCommand(String finalizeInfo) {
         //ServerStuff s = new ServerStuff();
         String result = s.receiveRequest(finalizeInfo);
-        System.out.println(result);
+        System.out.print(result);
     }
 
     private static void ShowFinalizeResult() {
