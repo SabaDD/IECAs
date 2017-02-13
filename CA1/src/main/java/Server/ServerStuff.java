@@ -1,6 +1,5 @@
 package Server;
 
-import Client.ClientSocket;
 import Common.FlightInfo;
 import Common.TicketInfo;
 import org.apache.log4j.Logger;
@@ -23,8 +22,8 @@ public class ServerStuff {
 //            LOGGER.error("Higher'priority.");
     public static String gIP = "188.166.78.119";
     public static int gPort = 8081;
-    public static HashMap<Socket, String> socketTokens;
-    public static HashMap<String, String> tokensInfo;
+    static HashMap<Socket, String> socketTokens;
+    static HashMap<String, String> tokensInfo;
 
     public static HashMap<Socket, String> getSocketTokens() {
         return socketTokens;
@@ -305,7 +304,7 @@ public class ServerStuff {
             ti.setAirlineCode(firstLineTokens[4]);
             ti.setFlightNo(firstLineTokens[5]);
             ti.setSeatClase(firstLineTokens[6]);
-            ti.setRefrenceCode(referenceTokens[0]);
+            ti.setReferenceCode(referenceTokens[0]);
             ti.setTicketNumber(referenceTokens[i]);
             ArrayList<FlightInfo> fi = searchRequest(ti.getOriginCode()+" "+ti.getDestinationCode()+" "+ti.getDate()+" 0 0 0");
             for(FlightInfo f:fi){
@@ -330,7 +329,7 @@ public class ServerStuff {
             TicketInfo t = ts.get(i);
             String dTime = t.getDepartureTime().substring(0, 2) + ":" + t.getDepartureTime().substring(2, 4);
             String aTime = t.getArrivalTime().substring(0, 2) + ":" + t.getArrivalTime().substring(2, 4);
-            finalResult = finalResult + t.getFirstName()+" "+ t.getSureName()+" "+t.getRefrenceCode()+
+            finalResult = finalResult + t.getFirstName()+" "+ t.getSureName()+" "+t.getReferenceCode()+
                     " "+t.getTicketNumber()+" "+t.getOriginCode()+" "+t.getDestinationCode()+" "+t.getDate()+" "
                     +t.getFlightNo()+" "+ t.getAirlineCode() + " " + t.getFlightNo() +
                     " " +t.getSeatClase()+" "+ dTime + " " + aTime + " " + t.getAirplaneModel() + "\n";

@@ -1,25 +1,23 @@
 package Common;
 
-import java.util.Map;
-
 /**
  * Created by Paniz on 2/13/2017.
  */
 public class TicketInfo {
-    public String FirstName;
-    public String SureName;
-    public String NationalID;
-    public String RefrenceCode;
-    public String TicketNumber;
-    public String OriginCode;
-    public String DestinationCode;
-    public String Date;
-    public String AirlineCode;
-    public String FlightNo;
-    public String DepartureTime;
-    public String ArrivalTime;
-    public String AirplaneModel;
-    public String SeatClase;
+    String FirstName;
+    String SureName;
+    String NationalID;
+    String ReferenceCode;
+    String TicketNumber;
+    String OriginCode;
+    String DestinationCode;
+    String Date;
+    String AirlineCode;
+    String FlightNo;
+    String DepartureTime;
+    String ArrivalTime;
+    String AirplaneModel;
+    String SeatClase;
 //    public Map<Character, Character> ClassSeat;
 //    public Map<Character, Integer> ClassPrice;
 //    public String count;
@@ -51,17 +49,18 @@ public class TicketInfo {
     public String getSureName() {
         return SureName;
     }
+    //
 
     public void setSureName(String sureName) {
         SureName = sureName;
     }
 
-    public String getRefrenceCode() {
-        return RefrenceCode;
+    public String getReferenceCode() {
+        return ReferenceCode;
     }
 
-    public void setRefrenceCode(String refrenceCode) {
-        RefrenceCode = refrenceCode;
+    public void setReferenceCode(String referenceCode) {
+        ReferenceCode = referenceCode;
     }
 
     public String getTicketNumber() {
