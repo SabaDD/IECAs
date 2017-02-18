@@ -1,0 +1,143 @@
+@font-face {
+    font-family: 'Vazir'; /*a name to be used later*/
+    src: url('./assets/fonts/Vazir.ttf'); /*URL to font*/
+    font-style:normal;
+    font-weight:normal;
+}
+
+*{
+   font-family: 'Vazir' ;
+   direction: rtl;
+}
+#firstRow{
+	line-height: 65px;
+	height: 70px;
+}
+#firstRowIcon img {
+	height: 40px;
+	margin-left: 15px;
+}
+#firstRowIcon {
+	font-size: 30px;
+	vertical-align: middle;
+}
+i.fa-registered {
+	font-size: 10px;
+	margin-right: 10px;
+}
+
+#firstRowUser{
+	display: inline-block;
+	font-size: 18px;
+	
+}
+i.fa-user{
+	margin-left: 10px;
+}
+
+.slider{
+	background-color: #676AA9;
+	height: 70px;
+}
+#secondRow{
+
+	height: 70px;
+	line-height: 70px;
+}
+.guideTab{
+	background-color: #676AA9;
+	vertical-align: middle;
+	font-size: 15px;
+}
+#enterInfoSection{
+	color: #FFFFFF;
+}
+i.fa-angle-left {
+	margin-right: 20px;
+}
+
+#thirdRow{
+	height: 80px;
+	line-height: 80px;
+	vertical-align: bottom;
+}
+#time{
+	color: #FF0000;
+	margin-right: 5px;
+}
+i.fa-arrow-right{
+	margin-left: 10px;
+}
+div.flightInfo{
+	background-color: #F5F5F5;
+}
+#fourthRow{
+	color:#696969;
+}
+#lable{
+	height: 20px;
+	line-height: 20px;
+	vertical-align: middle;
+	margin: 10px;
+	color: #000000;
+}
+#flightInfoData{
+	background-color: #FFFFFF;
+	margin: 10px;
+	border-radius: 5px;
+	padding: 10px;
+	vertical-align: middle;
+	text-align: right;
+	height: 80px;
+}
+#flightInfoData .row{
+	margin: 10px;
+}
+#tripInfo{
+	line-height: 70px;
+	vertical-align: middle;
+	font-size: 25px;
+}
+#departureTime{
+	margin-right: 10px;
+	margin-left: 10px;
+}
+#destinationCode{
+	margin-left: 10px;
+	margin-right: 10px;
+}
+#travelBillData{
+	background-color: #FFFFFF;
+	margin: 10px;
+	border-radius: 5px;
+}
+#tableBody{
+	color:#000000;
+}
+#passengerData{
+	margin: 30px;
+	margin-top: 10px;
+	border-radius: 5px;
+}
+#passengerData .input-group{
+	margin: 2px;
+}
+#adult i.fa-female{
+	font-size: 30px;
+}
+#child i.fa-female{
+	font-size: 25px;
+}
+#infant i.fa-female{
+	font-size: 15px;
+}
+#submitAndPay{
+	text-align: left;
+	margin-bottom: 15px;
+}
+div.footer{
+	height: 50px;
+	line-height: 50px;
+	vertical-align: middle;
+	text-align: center;
+}
