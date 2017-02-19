@@ -14,9 +14,18 @@
 		<div class="row" id="firstRow">
 			<div class="col-md-2" > </div>
 			<div class="col-md-8" >
-				<div class="col-md-3" id="firstRowUser"><i class="fa fa-user" aria-hidden="true"></i>نام کاربر</div>
-				<div class="col-md-9" id="firstRowIcon"><img src="./files/assets/LogoBlack.png">اکبر تیکت<i class="fa fa-registered" aria-hidden="true"></i></div>
+				<div class="col-md-4" id="firstRowUser">
+					<div class="dropdown">
+					  <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i>نام کاربر</button>
+					  <div class="dropdown-content">
+					    <a href="#">بلیت های من</a>
+					    <a href="#">خروج</a>
+					  </div>
+					</div>
+				</div>
+				<div class="col-md-8" id="firstRowIcon"><img src="./files/assets/LogoBlack.png">اکبر تیکت<i class="fa fa-registered" aria-hidden="true"></i></div>
 			</div>
+			<div class="col-md-2" > </div>
         </div>
 		<div class="row" id="secondRow">
 			<div class="col-md-2 slider" > </div>
@@ -36,7 +45,7 @@
 			<div class="col-md-2" > </div>
 			<div class="col-md-8 TimeAndResult" > 
 				<div class="col-md-3" >زمان باقی مانده:<span id="time">10:45</span></div>
-				<div class="col-md-9"><i class="fa fa-arrow-right" aria-hidden="true"></i>برگشت به صفحه نتایج</div>
+				<div class="col-md-9"><a id="backToResult" href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i>برگشت به صفحه نتایج</a></div>
 			</div>
 			<div class="col-md-2" > </div>
 		</div>
@@ -392,11 +401,11 @@
 					</div>
 				</div>
 				<div class="row" id="submitData">
-					<div class ="col-md-4" id= "decline">
+					<div class ="col-md-4" id= "submitAndPay">
 						<button type="button" class="btn btn-primary btn-lg">پرداخت و ثبت نهایی<i class="fa fa-angle-left" aria-hidden="true"></i></button>
 					</div>
-					<div class="col-md-8" id= "submitAndPay">
-						<button type="button" class="btn btn-danger btn-lg">انصراف</button>
+					<div class="col-md-8" id= "decline">
+						<button type="button" class="btn btn-lg" id="declineButton">انصراف</button>
 					</div>
 				</div>
 			 </div>

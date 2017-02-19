@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Vazir'; /*a name to be used later*/
-    src: url('./assets/fonts/Vazir.ttf'); /*URL to font*/
+    src: url('./assets/fonts/Farsi-Digits/Vazir-FD.ttf'); /*URL to font*/
     font-style:normal;
     font-weight:normal;
 }
@@ -11,7 +11,7 @@
 }
 #firstRow{
 	line-height: 65px;
-	height: 70px;
+	height: 85px;
 }
 #firstRowIcon img {
 	height: 40px;
@@ -29,16 +29,60 @@ i.fa-registered {
 #firstRowUser{
 	display: inline-block;
 	font-size: 18px;
+	color: #3C3F68;
 	
 }
 i.fa-user{
 	margin-left: 10px;
+}
+.dropbtn {
+    background-color: #FFFFFF;
+    padding: 5px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    font-size: 16px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #EEEEEE}
+.dropdown-content a:active {background-color: #D3D3D3}
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #FFFFFF;
+    color:#888EDF;
 }
 
 .slider{
 	background-color: #676AA9;
 	height: 70px;
 }
+
 #secondRow{
 
 	height: 70px;
@@ -64,6 +108,14 @@ i.fa-angle-left {
 #time{
 	color: #FF0000;
 	margin-right: 5px;
+}
+#backToResult{
+	color: #000000;
+	text-decoration: none;
+}
+#backToResult:hover{
+	color:#888EDF;
+	text-decoration: none;
 }
 i.fa-arrow-right{
 	margin-left: 10px;
@@ -132,8 +184,20 @@ div.flightInfo{
 	font-size: 15px;
 }
 #submitAndPay{
-	text-align: left;
+	text-align: right;
 	margin-bottom: 15px;
+}
+#decline{
+	text-align: left;
+	
+}
+#declineButton{
+	background-color: #EB9486;
+	color:#FFFFFF;
+}
+#declineButton:hover{
+	background-color: #EB9486;
+	box-shadow: 2px 2px 2px #888888;
 }
 div.footer{
 	height: 50px;
