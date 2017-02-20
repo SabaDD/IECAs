@@ -278,3 +278,13 @@ div.footer{
 	vertical-align: middle;
 	text-align: center;
 }
+
+
+article,
+aside,
+footer,
+header,
+nav,
+section {
+  display: block;
+}
