@@ -1,7 +1,7 @@
 body{
-	background-image: url(assets/Background.png);
+	background-image: url('./assets/Background.png');
 	background-repeat: no-repeat;
-	background-position: top left;
+	background-position: -31% -70%; 
 	background-size: 60%;
 	background-color: #7477b6;
 	font-family: 'Vazir';
@@ -11,7 +11,7 @@ body{
 
 @font-face {
     font-family: 'Vazir'; /*a name to be used later*/
-    src: url('./Font/Vazir.ttf'); /*URL to font*/
+    src: url('./assets/fonts/Farsi-Digits/Vazir-FD.ttf'); /*URL to font*/
     font-style:normal;
     font-weight:normal;
 }
@@ -19,11 +19,13 @@ body{
 *{
    font-family: 'Vazir' ;
    direction: rtl;
+      /*box-sizing: border-box;*/
 }
 .container {
-	padding-top: 40px;
-	position: relative;
-  /*display: -webkit-box;
+	padding-top: 120px;
+	/*position: relative;*/
+	padding-right: 250px; 
+  /*display: -webkits-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -34,35 +36,60 @@ body{
   align-items: center;*/
 }
 .row{
-	padding-right: 40px;
+	padding-right: 140px;
 
 }
 .right_button {
     border-radius: 10px 0px 0px 10px;
     /*background: #73AD21;*/
     /*left-padding: 50px;*/
-    width: 80px;
-    height: 30px;
+    width: 145px;
+    height: 40px;
     color: white;
     background-color: #323793;
-    font-size: 10px;
+    font-size: 12px;
     display:inline;
     margin-right: 0px;
     margin-left: 0px;
+    /*margin-top: 40px;*/
+    outline:none;
+    border: 0px;
+    border-color: none;
+    border-width: 0px;
+    /*padding-top: 2px;*/
+    position: relative;
+}
+
+.right_button:active{
+	background-color: black;
 }
 .left_button {
     border-radius: 0px 10px 10px 0px;
     /*background: #73AD21;*/
     /*padding: 50px; */
-    width: 80px;
-    height: 30px;
-    font-size: 10px;
+    width: 145px;
+    height: 40px;
+    font-size: 12px;
     color: white;
     background-color: #323793;
     display:inline;
     margin-right: 0px;
     margin-left: 0px;
+    /*margin-top: 40px;*/
     float: right;
+    outline:none;
+    border: 0px;
+    border-color: none;
+    border-width: 0px;
+    position: relative;
+}
+.lable{
+  font-size: 15px;
+  width: 135px;
+  word-wrap: normal;
+  align-content: center;
+  text-align: center;
+  padding-right: 353px;
 }
 .right_button:hover {
 	color: black;
@@ -72,28 +99,40 @@ body{
 	color: black;
 	background-color: white;
 }
+.big_button{
+	border-radius: 0px 0px 10px 10px;
+	width: 290px;
+    height: 40px;
+    font-size: 12px;
+    color: white;
+    background-color: #F68F6F;
+    display:inline;
+    margin-right: 0px;
+    margin-left: 0px;
+    float: right;
+    outline:none;
+    border: 0px;
+    border-color: none;
+    border-width: 0px;
+}
+.big_button:hover{
+  background-color: #F8A791;
+}
 .search_panel{
-	border-radius: 10px 10px 10px 10px;
-	width: 160px;
-    height: 220px; 
-    background-color: #323793;
+	border-radius: 10px 10px 0px 0px;
+	width: 290px;
+  height: 290px; 
+  background-color: #323793;
 }
 .line{
 	padding-top: 4px;
 	padding-bottom: 4px;
 }
-#slideshow{
-	border-radius: 10px 10px 10px 10px;
-	width: 160px;
-    height: 220px; 
-    background-color: gray;	
-    margin-left: 20px;
-}
 .container img {
  position:absolute;
- padding-right: 110px;
- width:160px;
- height:220px;
+ padding-right: 340px;
+ width:175px;
+ height:235px;
 }
 @-webkit-keyframes xfade {
     0% {
@@ -133,7 +172,34 @@ body{
     -webkit-animation: xfade 120s 0s infinite;
     animation: xfade 120s 0s infinite;
 }
-.container img:nth-child(7) {
+.container img:nth-child(8):hover {
+    -webkit-animation: paused;
+    animation: paused;
+}
+.container img:nth-child(7):hover {
+    -webkit-animation: paused;
+    animation: paused;
+}.container img:nth-child(6):hover {
+    -webkit-animation: paused;
+    animation: paused;
+}.container img:nth-child(5):hover {
+    -webkit-animation: paused;
+    animation: paused;
+}.container img:nth-child(4):hover {
+    -webkit-animation: paused;
+    animation: paused;
+}.container img:nth-child(3):hover {
+    -webkit-animation: paused;
+    animation: paused;
+}
+.container img:nth-child(2):hover {
+    -webkit-animation: paused;
+    animation: paused;
+}.container img:nth-child(1):hover {
+    -webkit-animation: paused;
+    animation: paused;
+}
+/*.container img:nth-child(7) {
     -webkit-animation: xfade 120s 15s infinite;
     animation: xfade 120s 15s infinite;
 }
@@ -161,41 +227,74 @@ body{
     -webkit-animation: xfade 120s 105s infinite;
     animation: xfade 120s 105s infinite;
 }
-/*@import "compass/css3";
-
-.flex-container {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-
-  flex-direction: row;
-  -webkit-flex-direction: row;
-
-  -webkit-flex-wrap: wrap;  Safari 
-  flex-wrap:         wrap;
-  
-  -webkit-justify-content: flex-end; /* Safari */
- /* justify-content: flex-end;
-
-  -webkit-align-items: center; /* Safari */
-  /*align-items: center;
-
-  -webkit-align-content: flex-end; /* Safari */
-  /*align-content:         flex-end;
-
+.css-slideshow {
+  position: relative;
+  max-width: 495px;
+  height: 370px;
+  margin: 5em auto .5em auto;
 }
-.flex-item {
- order: 0;
-}*/
-/*.navigation {
-  display: flex;
-  flex-flow: row wrap;
-   This aligns items to the end line on main-axis 
-  justify-content: flex-end;
-}*/
+.css-slideshow figure {
+  margin: 0;
+  max-width: 495px;
+  height: 370px;
+  background: #000;
+  position: absolute;
+}
+.css-slideshow:hover figure {
+  -webkit-animation-play-state: paused;
+  animation-play-state: paused;
+}
+.css-slideshow img {
+  padding-bottom: 100px;
+  /*box-shadow: 0 0 2px #666;*/
+}
+.pauseplay {
+  position: relative;
+  margin: 5em auto .5em auto;
+}
+.css-slideshow-attr {
+  max-width: 495px;
+  text-align: right;
+  font-size: .7em;
+  font-style: italic;
+  margin: 0 auto;
+}
+.css-slideshow-attr a {
+  color: #666;
+}
+.css-slideshow figure {
+  opacity: 1;
+}
+figure:nth-child(1) {
+  animation: xfade 48s 42s infinite;
+}
+figure:nth-child(2) {
+  animation: xfade 48s 36s infinite;
+}
+figure:nth-child(3) {
+  animation: xfade 48s 30s infinite;
+}
+figure:nth-child(4) {
+  animation: xfade 48s 24s infinite;
+}
+figure:nth-child(5) {
+  animation: xfade 48s 18s infinite;
+}
+figure:nth-child(6) {
+  animation: xfade 48s 12s infinite;
+}
+figure:nth-child(7) {
+  animation: xfade 48s 6s infinite;
+}
+figure:nth-child(8) {
+  animation: xfade 48s 0s infinite;
+}
+.css-slideshow:hover figure,
+#pauseShow:checked ~ figure {
+  -webkit-animation-play-state: paused;
+  animation-play-state: paused;
+}
+#pauseShow:checked + label,
+#pauseShow:not(:checked) + label + label {
+  display: none;
+}
